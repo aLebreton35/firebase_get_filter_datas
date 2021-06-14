@@ -1,34 +1,33 @@
 {
   "project_info": {
-    "project_number": "399262740706",
-    "firebase_url": "https://dit-friendlyeats.firebaseio.com",
-    "project_id": "dit-friendlyeats",
-    "storage_bucket": "dit-friendlyeats.appspot.com"
+    "project_number": "161722748910",
+    "project_id": "friendlyeats-22b23",
+    "storage_bucket": "friendlyeats-22b23.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:399262740706:android:97cd7ee48bd0e4292b2ebb",
+        "mobilesdk_app_id": "1:161722748910:android:39419472bc050a33d708ff",
         "android_client_info": {
           "package_name": "com.example.friendlyeats"
         }
       },
       "oauth_client": [
         {
-          "client_id": "399262740706-6bi52cmeak85i25dmebcb1lvf3383bpr.apps.googleusercontent.com",
+          "client_id": "161722748910-n4vrqo2knbqtjphaji2ol5fecrijlj7f.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAwFoOkWoMrDjM0-NeqlFAWvbevCR8nnnI"
+          "current_key": "AIzaSyCq6MNnGlZ6FETkgMQEjvt8sr37YiJxFwo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "399262740706-6bi52cmeak85i25dmebcb1lvf3383bpr.apps.googleusercontent.com",
+              "client_id": "161722748910-n4vrqo2knbqtjphaji2ol5fecrijlj7f.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
