@@ -56,16 +56,16 @@ class FilterBar extends StatelessWidget {
 
   List<InlineSpan> _buildCitySpans(Filter filter) {
     return [
-      if (filter.city != null) ...[
+      if (filter.place != null) ...[
         TextSpan(text: 'in '),
-        TextSpan(text: '${filter.city} ', style: _boldStyle),
+        TextSpan(text: '${filter.place} ', style: _boldStyle),
       ],
     ];
   }
 
   List<InlineSpan> _buildSubtitleSpans(Filter filter) {
     final orderedByRating =
-        filter == null || filter.sort == null || filter.sort == 'avgRating';
+        filter == null || filter.sort == null || filter.sort == 'eventDateBegin';
     return [
       if (filter != null) ..._buildCitySpans(filter),
       if (orderedByRating) TextSpan(text: 'by rating'),

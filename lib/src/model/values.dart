@@ -13,97 +13,61 @@
 // limitations under the License.
 
 import 'dart:math';
+import 'package:random_date/random_date.dart';
 
-final cities = [
-  'Albuquerque',
-  'Arlington',
-  'Atlanta',
-  'Austin',
-  'Baltimore',
-  'Boston',
-  'Charlotte',
-  'Chicago',
-  'Cleveland',
-  'Colorado Springs',
-  'Columbus',
-  'Dallas',
-  'Denver',
-  'Detroit',
-  'El Paso',
-  'Fort Worth',
-  'Fresno',
-  'Houston',
-  'Indianapolis',
-  'Jacksonville',
-  'Kansas City',
-  'Las Vegas',
-  'Long Island',
-  'Los Angeles',
-  'Louisville',
-  'Memphis',
-  'Mesa',
-  'Miami',
-  'Milwaukee',
-  'Nashville',
-  'New York',
-  'Oakland',
-  'Oklahoma',
-  'Omaha',
-  'Philadelphia',
-  'Phoenix',
-  'Portland',
-  'Raleigh',
-  'Sacramento',
-  'San Antonio',
-  'San Diego',
-  'San Francisco',
-  'San Jose',
-  'Seattle',
-  'Tucson',
-  'Tulsa',
-  'Virginia Beach',
-  'Washington',
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+final places = [
+  'CÔTE OUBLIÉE',
+  'NOUMÉA',
 ];
 
 final categories = [
-  'Brunch',
-  'Burgers',
-  'Coffee',
-  'Deli',
-  'Dim Sum',
-  'Indian',
-  'Italian',
-  'Mediterranean',
-  'Mexican',
-  'Pizza',
-  'Ramen',
-  'Sushi',
+  'Festival',
+  'Concert',
+  'Soirée',
+  'Animation',
+  'Exposition',
+  'Spectacle',
+  'Conférence',
+  'Cinéma',
+  'Gastronomie',
+  'Sport',
+  'Loisir',
+  'Voyage'
+];
+
+final options = [
+  'Seul',
+  'En couple',
+  'Animaux',
+  'Enfant',
 ];
 
 final _words = [
   'Bar',
-  'Deli',
+  'Exposition',
   'Diner',
   'Fire',
-  'Grill',
-  'Drive Thru',
+  'Subculture',
+  'Concert',
   'Place',
   'Best',
   'Spot',
-  'Trattoria',
-  'Steakhouse',
-  'Churrasco',
-  'Tavern',
+  'Sortie en mer',
+  'kanak',
+  'Festival',
+  'Mer',
   'Cafe',
   'Pop-up',
-  'Yummy',
-  'Belly',
+  'Soirée',
+  'Blanche',
   'Snack',
-  'Fast',
-  'Turbo',
-  'Hyper',
-  'Prime',
-  'Eatin\'',
+  'BigFlo et Oli',
+  'Marché',
+  'Noel',
+  'Bateau',
+  'Brunch\'',
 ];
 
 final _reviewTextPerRating = {
@@ -150,12 +114,16 @@ String getRandomName() {
   return '${_words[firstWord]} ${_words[nextWord]}';
 }
 
-String getRandomCategory() {
-  return categories[random.nextInt(categories.length)];
+Timestamp getRandomTimpestamp() {
+  return Timestamp.fromDate(RandomDate.withStartYear(2020).random());
 }
 
-String getRandomCity() {
-  return cities[random.nextInt(cities.length)];
+String getRandomPlace() {
+  return places[random.nextInt(places.length)];
+}
+
+String getRandomCategory() {
+  return categories[random.nextInt(categories.length)];
 }
 
 String getRandomPhoto() {

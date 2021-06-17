@@ -15,7 +15,7 @@
 import 'package:flutter/material.dart';
 
 import 'home_page.dart';
-import 'restaurant_page.dart';
+import 'event_page.dart';
 
 class FriendlyEatsApp extends StatelessWidget {
   @override
@@ -24,17 +24,17 @@ class FriendlyEatsApp extends StatelessWidget {
       title: 'FriendlyEats',
       onGenerateRoute: (settings) {
         switch (settings.name) {
-          case RestaurantPage.route:
+          case EventPage.route:
             final RestaurantPageArguments arguments = settings.arguments;
             return MaterialPageRoute(
-                builder: (context) => RestaurantPage(
-                      restaurantId: arguments.id,
+                builder: (context) => EventPage(
+                      eventId: arguments.id,
                     ));
             break;
           default:
             // return MaterialPageRoute(
             //     builder: (context) => RestaurantPage(
-            //           restaurantId: 'lV81npEeboEActMpUJjn',
+            //           eventId: 'lV81npEeboEActMpUJjn',
             //         ));
             // Everything defaults to home, but maybe we want a custom 404 here
             return MaterialPageRoute(builder: (context) => HomePage());

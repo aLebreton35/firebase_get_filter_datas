@@ -18,11 +18,11 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:friendlyeats/src/event_page.dart';
 
-import 'restaurant_page.dart';
 import 'model/data.dart' as data;
 import 'model/filter.dart';
-import 'model/restaurant.dart';
+import 'model/event.dart';
 import 'widgets/empty_list.dart';
 import 'widgets/filter_bar.dart';
 import 'widgets/grid.dart';
@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
         .signInAnonymously()
         .then((UserCredential userCredential) {
       _currentSubscription =
-          data.loadAllRestaurants().listen(_updateRestaurants);
+          data.loadAllEvents().listen(_updateRestaurants);
     });
   }
 
@@ -55,21 +55,21 @@ class _HomePageState extends State<HomePage> {
 
   StreamSubscription<QuerySnapshot> _currentSubscription;
   bool _isLoading = true;
-  List<Restaurant> _restaurants = <Restaurant>[];
+  List<Event> _events = <Event>[];
   Filter _filter;
 
   void _updateRestaurants(QuerySnapshot snapshot) {
     setState(() {
       _isLoading = false;
-      _restaurants = data.getRestaurantsFromQuery(snapshot);
+      _events = data.getEventsFromQuery(snapshot);
     });
   }
 
-  Future<void> _onAddRandomRestaurantsPressed() async {
+  Future<void> _onAddRandomEventsPressed() async {
     final numReviews = Random().nextInt(10) + 20;
 
-    final restaurants = List.generate(numReviews, (_) => Restaurant.random());
-    data.addRestaurantsBatch(restaurants);
+    final events = List.generate(numReviews, (_) => Event.random());
+    data.addEventsBatch(events);
   }
 
   Future<void> _onFilterBarPressed() async {
@@ -84,10 +84,10 @@ class _HomePageState extends State<HomePage> {
         _filter = filter;
         if (filter.isDefault) {
           _currentSubscription =
-              data.loadAllRestaurants().listen(_updateRestaurants);
+              data.loadAllEvents().listen(_updateRestaurants);
         } else {
           _currentSubscription =
-              data.loadFilteredRestaurants(filter).listen(_updateRestaurants);
+              data.loadFilteredEvents(filter).listen(_updateRestaurants);
         }
       });
     }
@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.restaurant),
+        leading: Icon(Icons.event),
         title: Text('FriendlyEats'),
         bottom: PreferredSize(
           preferredSize: Size(320, 48),
@@ -115,17 +115,17 @@ class _HomePageState extends State<HomePage> {
           constraints: BoxConstraints(maxWidth: 1280),
           child: _isLoading
               ? CircularProgressIndicator()
-              : _restaurants.isNotEmpty
+              : _events.isNotEmpty
                   ? RestaurantGrid(
-                      restaurants: _restaurants,
+                      events: _events,
                       onRestaurantPressed: (id) {
                         // TODO: Add deep links on web
-                        Navigator.pushNamed(context, RestaurantPage.route,
+                        Navigator.pushNamed(context, EventPage.route,
                             arguments: RestaurantPageArguments(id: id));
                       })
                   : EmptyListView(
-                      child: Text('FriendlyEats has no restaurants yet!'),
-                      onPressed: _onAddRandomRestaurantsPressed,
+                      child: Text('FriendlyEats has no events yet!'),
+                      onPressed: _onAddRandomEventsPressed,
                     ),
         ),
       ),

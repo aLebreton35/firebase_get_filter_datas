@@ -35,14 +35,14 @@ class _FilterSelectDialogState extends State<FilterSelectDialog> {
   _FilterSelectDialogState({Filter filter}) {
     if (filter != null && !filter.isDefault) {
       _category = filter.category;
-      _city = filter.city;
+      _place = filter.place;
       _price = filter.price;
       _sort = filter.sort;
     }
   }
 
   String _category;
-  String _city;
+  String _place;
   int _price;
   String _sort;
 
@@ -90,7 +90,7 @@ class _FilterSelectDialogState extends State<FilterSelectDialog> {
     FilterChangedCallback<String> onChanged,
   }) {
     return _buildDropdownRow<String>(
-      labels: ['Any Cuisine', ...hardcoded.categories],
+      labels: ['Catégorie', ...hardcoded.categories],
       values: [null, ...hardcoded.categories],
       selected: selected,
       icon: Icons.fastfood,
@@ -103,8 +103,8 @@ class _FilterSelectDialogState extends State<FilterSelectDialog> {
     FilterChangedCallback<String> onChanged,
   }) {
     return _buildDropdownRow<String>(
-      labels: ['Any Location', ...hardcoded.cities],
-      values: [null, ...hardcoded.cities],
+      labels: ['Lieu', ...hardcoded.places],
+      values: [null, ...hardcoded.places],
       selected: selected,
       icon: Icons.location_on,
       onChanged: onChanged,
@@ -164,10 +164,10 @@ class _FilterSelectDialogState extends State<FilterSelectDialog> {
                   });
                 }),
             _buildCityDropdown(
-                selected: _city,
+                selected: _place,
                 onChanged: (String value) {
                   setState(() {
-                    _city = value;
+                    _place = value;
                   });
                 }),
             _buildPriceDropdown(
@@ -198,7 +198,7 @@ class _FilterSelectDialogState extends State<FilterSelectDialog> {
               context,
               Filter(
                 category: _category,
-                city: _city,
+                place: _place,
                 price: _price,
                 sort: _sort,
               )),

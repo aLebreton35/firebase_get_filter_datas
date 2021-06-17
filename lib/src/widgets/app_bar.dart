@@ -14,18 +14,18 @@
 
 import 'package:flutter/material.dart';
 
-import '../model/restaurant.dart';
+import '../model/event.dart';
 import 'stars.dart';
 
 class RestaurantAppBar extends StatelessWidget {
   static final double appBarHeight = 160;
 
   RestaurantAppBar({
-    this.restaurant,
+    this.event,
     CloseRestaurantPressedCallback onClosePressed,
   }) : _onPressed = onClosePressed;
 
-  final Restaurant restaurant;
+  final Event event;
 
   final CloseRestaurantPressedCallback _onPressed;
 
@@ -44,7 +44,7 @@ class RestaurantAppBar extends StatelessWidget {
         title: Wrap(
           children: <Widget>[
             Text(
-              restaurant.name,
+              event.name,
               overflow: TextOverflow.ellipsis,
             ),
             Row(
@@ -54,7 +54,7 @@ class RestaurantAppBar extends StatelessWidget {
                   width: 80,
                   alignment: Alignment.bottomLeft,
                   child: StarRating(
-                    rating: restaurant.avgRating,
+                    rating: 3,
                     color: Colors.white,
                     size: 16,
                   ),
@@ -62,28 +62,28 @@ class RestaurantAppBar extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: 6),
                   child: Text(
-                    '\$' * restaurant.price,
+                    '\$' * 3,
                     style: TextStyle(
                         fontSize: Theme.of(context).textTheme.caption.fontSize),
                   ),
                 ),
               ],
             ),
-            Padding(
-              padding: EdgeInsets.only(top: 2),
-              child: Text(
-                '${restaurant.category} ● ${restaurant.city}',
-                style: TextStyle(
-                    fontSize: Theme.of(context).textTheme.caption.fontSize),
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.only(top: 2),
+            //   child: Text(
+            //     '${event.category} ● ${event.city}',
+            //     style: TextStyle(
+            //         fontSize: Theme.of(context).textTheme.caption.fontSize),
+            //   ),
+            // ),
           ],
         ),
         background: Stack(
           fit: StackFit.expand,
           children: [
             Image.network(
-              restaurant.photo,
+              event.image,
               fit: BoxFit.cover,
             ),
             Container(

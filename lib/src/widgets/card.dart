@@ -15,16 +15,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../model/restaurant.dart';
+import '../model/event.dart';
 import 'stars.dart';
 
-class RestaurantCard extends StatelessWidget {
-  RestaurantCard({
-    this.restaurant,
+class EventCard extends StatelessWidget {
+  EventCard({
+    this.event,
     @required RestaurantPressedCallback onRestaurantPressed,
   }) : _onPressed = onRestaurantPressed;
 
-  final Restaurant restaurant;
+  final Event event;
 
   final RestaurantPressedCallback _onPressed;
 
@@ -32,7 +32,7 @@ class RestaurantCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
         child: InkWell(
-      onTap: () => _onPressed(restaurant.id),
+      onTap: () => _onPressed(event.id),
       splashColor: Colors.blue.withAlpha(30),
       child: Container(
         height: 250,
@@ -44,7 +44,7 @@ class RestaurantCard extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: NetworkImage(restaurant.photo),
+                      image: NetworkImage(event.image),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -61,12 +61,12 @@ class RestaurantCard extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-                          restaurant.name,
+                          event.name,
                           style: Theme.of(context).textTheme.headline6,
                         ),
                       ),
                       Text(
-                        '\$' * restaurant.price,
+                        '\$' * 2,
                         style: Theme.of(context).textTheme.caption,
                       ),
                     ],
@@ -75,14 +75,16 @@ class RestaurantCard extends StatelessWidget {
                     padding: EdgeInsets.fromLTRB(0, (kIsWeb ? 0 : 2), 0, 4),
                     alignment: Alignment.bottomLeft,
                     child: StarRating(
-                      rating: restaurant.avgRating,
+                      rating: 2,
                     ),
                   ),
                   Container(
                     alignment: Alignment.bottomLeft,
                     child: Text(
-                      '${restaurant.category} ● ${restaurant.city}',
+                      event.category + ' - ' + event.place + ' - ' + event.price.toString() + ' - ' + event.eventDateBegin.toString(),
                       style: Theme.of(context).textTheme.caption,
+                      // '${event.category} ● ${event.city}',
+                      // style: Theme.of(context).textTheme.caption,
                     ),
                   ),
                 ],

@@ -23,32 +23,32 @@ import 'package:sliver_fab/sliver_fab.dart';
 
 import 'widgets/empty_list.dart';
 import 'model/data.dart' as data;
-import 'model/restaurant.dart';
+import 'model/event.dart';
 import 'model/review.dart';
 import 'widgets/app_bar.dart';
 import 'widgets/review.dart';
 import 'widgets/dialogs/review_create.dart';
 
-class RestaurantPage extends StatefulWidget {
-  static const route = '/restaurant';
+class EventPage extends StatefulWidget {
+  static const route = '/event';
 
-  final String _restaurantId;
+  final String _eventId;
 
-  RestaurantPage({Key key, @required String restaurantId})
-      : _restaurantId = restaurantId,
+  EventPage({Key key, @required String eventId})
+      : _eventId = eventId,
         super(key: key);
 
   @override
-  _RestaurantPageState createState() =>
-      _RestaurantPageState(restaurantId: _restaurantId);
+  _EventPageState createState() =>
+      _EventPageState(eventId: _eventId);
 }
 
-class _RestaurantPageState extends State<RestaurantPage> {
-  _RestaurantPageState({@required String restaurantId}) {
+class _EventPageState extends State<EventPage> {
+  _EventPageState({@required String eventId}) {
     FirebaseAuth.instance
         .signInAnonymously()
         .then((UserCredential userCredential) {
-      data.getRestaurant(restaurantId).then((Restaurant restaurant) {
+      data.getEvent(eventId).then((Event event) {
         _currentReviewSubscription?.cancel();
         setState(() {
           if (userCredential.user.displayName == null ||
@@ -57,22 +57,22 @@ class _RestaurantPageState extends State<RestaurantPage> {
           } else {
             _userName = userCredential.user.displayName;
           }
-          _restaurant = restaurant;
+          _event = event;
           _userId = userCredential.user.uid;
 
           // Initialize the reviews snapshot...
-          _currentReviewSubscription = _restaurant.reference
-              .collection('ratings')
-              .orderBy('timestamp', descending: true)
-              .snapshots()
-              .listen((QuerySnapshot reviewSnap) {
-            setState(() {
-              _isLoading = false;
-              _reviews = reviewSnap.docs.map((DocumentSnapshot doc) {
-                return Review.fromSnapshot(doc);
-              }).toList();
-            });
-          });
+          // _currentReviewSubscription = _event.reference
+          //     .collection('ratings')
+          //     .orderBy('timestamp', descending: true)
+          //     .snapshots()
+          //     .listen((QuerySnapshot reviewSnap) {
+          //   setState(() {
+          //     _isLoading = false;
+          //     _reviews = reviewSnap.docs.map((DocumentSnapshot doc) {
+          //       return Review.fromSnapshot(doc);
+          //     }).toList();
+          //   });
+          // });
         });
       });
     });
@@ -87,7 +87,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
   bool _isLoading = true;
   StreamSubscription<QuerySnapshot> _currentReviewSubscription;
 
-  Restaurant _restaurant;
+  Event _event;
   String _userId;
   String _userName;
   List<Review> _reviews = <Review>[];
@@ -100,27 +100,27 @@ class _RestaurantPageState extends State<RestaurantPage> {
         userName: _userName,
       ),
     );
-    if (newReview != null) {
-      // Save the review
-      return data.addReview(
-        restaurantId: _restaurant.id,
-        review: newReview,
-      );
-    }
+    // if (newReview != null) {
+    //   // Save the review
+    //   return data.addReview(
+    //     eventId: _event.id,
+    //     review: newReview,
+    //   );
+    // }
   }
 
   void _onAddRandomReviewsPressed() async {
     // Await adding a random number of random reviews
-    final numReviews = Random().nextInt(5) + 5;
-    for (var i = 0; i < numReviews; i++) {
-      await data.addReview(
-        restaurantId: _restaurant.id,
-        review: Review.random(
-          userId: _userId,
-          userName: _userName,
-        ),
-      );
-    }
+    // final numReviews = Random().nextInt(5) + 5;
+    // for (var i = 0; i < numReviews; i++) {
+    //   await data.addReview(
+    //     eventId: _event.id,
+    //     review: Review.random(
+    //       userId: _userId,
+    //       userName: _userName,
+    //     ),
+    //   );
+    // }
   }
 
   @override
@@ -140,7 +140,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
                 expandedHeight: RestaurantAppBar.appBarHeight,
                 slivers: <Widget>[
                   RestaurantAppBar(
-                    restaurant: _restaurant,
+                    event: _event,
                     onClosePressed: () => Navigator.pop(context),
                   ),
                   _reviews.isNotEmpty
@@ -156,7 +156,7 @@ class _RestaurantPageState extends State<RestaurantPage> {
                       : SliverFillRemaining(
                           hasScrollBody: false,
                           child: EmptyListView(
-                            child: Text('${_restaurant.name} has no reviews.'),
+                            child: Text('${_event.name} has no reviews.'),
                             onPressed: _onAddRandomReviewsPressed,
                           ),
                         ),

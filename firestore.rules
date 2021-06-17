@@ -5,7 +5,7 @@ service cloud.firestore {
     //   - Authenticated user can create/update (for demo)
     //   - Validate updates
     //   - Deletes are not allowed
-    match /restaurants/{restaurantId} {
+    match /events/{eventId} {
       allow read, create: if request.auth != null;
       allow update: if request.auth != null
                     && request.resource.data.name == resource.data.name

@@ -15,95 +15,98 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import './filter.dart';
-import './restaurant.dart';
+import './event.dart';
 import './review.dart';
 
 // This is the file that Codelab users will primarily work on.
 
-Future<void> addRestaurant(Restaurant restaurant) {
-  final restaurants = FirebaseFirestore.instance.collection('restaurants');
-  return restaurants.add({
-    'avgRating': restaurant.avgRating,
-    'category': restaurant.category,
-    'city': restaurant.city,
-    'name': restaurant.name,
-    'numRatings': restaurant.numRatings,
-    'photo': restaurant.photo,
-    'price': restaurant.price,
+Future<void> addEvent(Event event) {
+  final events = FirebaseFirestore.instance.collection('events');
+  return events.add({
+    'description': event.description,
+    'eventDateBegin': event.eventDateBegin,
+    'eventDateEnd': event.eventDateEnd,
+    'name': event.name,
+    'image': event.image,
+    'location': event.location,
+    'organizer': event.organizer,
+    'category': event.category,
+    'place': event.place,
+    'price': event.price,
   });
 }
 
-Stream<QuerySnapshot> loadAllRestaurants() {
+Stream<QuerySnapshot> loadAllEvents() {
   return FirebaseFirestore.instance
-      .collection('restaurants')
-      .orderBy('avgRating', descending: true)
+      .collection('events')
+      // .orderBy('eventDateBegin', descending: true)
       .limit(50)
       .snapshots();
 }
 
-List<Restaurant> getRestaurantsFromQuery(QuerySnapshot snapshot) {
+List<Event> getEventsFromQuery(QuerySnapshot snapshot) {
   return snapshot.docs.map((DocumentSnapshot doc) {
-    return Restaurant.fromSnapshot(doc);
+    return Event.fromSnapshot(doc);
   }).toList();
 }
 
-Future<Restaurant> getRestaurant(String restaurantId) {
+Future<Event> getEvent(String eventId) {
   return FirebaseFirestore.instance
-      .collection('restaurants')
-      .doc(restaurantId)
+      .collection('events')
+      .doc(eventId)
       .get()
-      .then((DocumentSnapshot doc) => Restaurant.fromSnapshot(doc));
+      .then((DocumentSnapshot doc) => Event.fromSnapshot(doc));
 }
 
-Future<void> addReview({String restaurantId, Review review}) {
-  final restaurant =
-      FirebaseFirestore.instance.collection('restaurants').doc(restaurantId);
-  final newReview = restaurant.collection('ratings').doc();
+// Future<void> addReview({String eventId, Review review}) {
+//   final event =
+//       FirebaseFirestore.instance.collection('events').doc(eventId);
+//   final newReview = event.collection('ratings').doc();
+//
+//   return FirebaseFirestore.instance.runTransaction((Transaction transaction) {
+//     return transaction
+//         .get(event)
+//         .then((DocumentSnapshot doc) => Event.fromSnapshot(doc))
+//         .then((Event fresh) {
+//       final newRatings = fresh.numRatings + 1;
+//       final newAverage =
+//           ((fresh.numRatings * fresh.avgRating) + review.rating) / newRatings;
+//
+//       transaction.update(event, {
+//         'numRatings': newRatings,
+//         'avgRating': newAverage,
+//       });
+//
+//       transaction.set(newReview, {
+//         'rating': review.rating,
+//         'text': review.text,
+//         'userName': review.userName,
+//         'timestamp': review.timestamp ?? FieldValue.serverTimestamp(),
+//         'userId': review.userId,
+//       });
+//     });
+//   });
+// }
 
-  return FirebaseFirestore.instance.runTransaction((Transaction transaction) {
-    return transaction
-        .get(restaurant)
-        .then((DocumentSnapshot doc) => Restaurant.fromSnapshot(doc))
-        .then((Restaurant fresh) {
-      final newRatings = fresh.numRatings + 1;
-      final newAverage =
-          ((fresh.numRatings * fresh.avgRating) + review.rating) / newRatings;
-
-      transaction.update(restaurant, {
-        'numRatings': newRatings,
-        'avgRating': newAverage,
-      });
-
-      transaction.set(newReview, {
-        'rating': review.rating,
-        'text': review.text,
-        'userName': review.userName,
-        'timestamp': review.timestamp ?? FieldValue.serverTimestamp(),
-        'userId': review.userId,
-      });
-    });
-  });
-}
-
-Stream<QuerySnapshot> loadFilteredRestaurants(Filter filter) {
-  Query collection = FirebaseFirestore.instance.collection('restaurants');
+Stream<QuerySnapshot> loadFilteredEvents(Filter filter) {
+  Query collection = FirebaseFirestore.instance.collection('events');
   if (filter.category != null) {
     collection = collection.where('category', isEqualTo: filter.category);
   }
-  if (filter.city != null) {
-    collection = collection.where('city', isEqualTo: filter.city);
+  if (filter.place != null) {
+    collection = collection.where('place', isEqualTo: filter.place);
   }
   if (filter.price != null) {
     collection = collection.where('price', isEqualTo: filter.price);
   }
   return collection
-      .orderBy(filter.sort ?? 'avgRating', descending: true)
+      .orderBy(filter.sort ?? 'eventDateBegin', descending: true)
       .limit(50)
       .snapshots();
 }
 
-void addRestaurantsBatch(List<Restaurant> restaurants) {
-  restaurants.forEach((Restaurant restaurant) {
-    addRestaurant(restaurant);
+void addEventsBatch(List<Event> events) {
+  events.forEach((Event event) {
+    addEvent(event);
   });
 }

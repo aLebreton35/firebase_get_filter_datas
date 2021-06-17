@@ -27,6 +27,7 @@ dependencies:
   cloud_firestore: ^0.14.0+2
   responsive_grid: ^1.2.1+1
   smooth_star_rating: ^1.1.1
+  random_date: ^0.0.5
   sliver_fab: ^1.0.0
   flutter:
     sdk: flutter

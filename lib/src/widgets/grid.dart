@@ -17,7 +17,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 
-import '../model/restaurant.dart';
+import '../model/event.dart';
 import 'card.dart';
 
 const double _minSpacingPx = 16;
@@ -26,12 +26,12 @@ const double _cardWidth = 360;
 class RestaurantGrid extends StatelessWidget {
   RestaurantGrid({
     @required RestaurantPressedCallback onRestaurantPressed,
-    @required List<Restaurant> restaurants,
+    @required List<Event> events,
   })  : _onRestaurantPressed = onRestaurantPressed,
-        _restaurants = restaurants;
+        _events = events;
 
   final RestaurantPressedCallback _onRestaurantPressed;
-  final List<Restaurant> _restaurants;
+  final List<Event> _events;
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +40,9 @@ class RestaurantGrid extends StatelessWidget {
       desiredItemWidth: math.min(
           _cardWidth, MediaQuery.of(context).size.width - (2 * _minSpacingPx)),
       minSpacing: _minSpacingPx,
-      children: _restaurants
-          .map((restaurant) => RestaurantCard(
-                restaurant: restaurant,
+      children: _events
+          .map((event) => EventCard(
+                event: event,
                 onRestaurantPressed: _onRestaurantPressed,
               ))
           .toList(),

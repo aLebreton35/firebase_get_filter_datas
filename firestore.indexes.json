@@ -1,7 +1,7 @@
 {
   "indexes": [
     {
-      "collectionGroup": "restaurants",
+      "collectionGroup": "events",
       "queryScope": "COLLECTION",
       "fields": [
         {
@@ -9,27 +9,27 @@
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "avgRating",
+          "fieldPath": "eventDateBegin",
           "order": "DESCENDING"
         }
       ]
     },
     {
-      "collectionGroup": "restaurants",
+      "collectionGroup": "events",
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "city",
+          "fieldPath": "place",
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "avgRating",
+          "fieldPath": "eventDateBegin",
           "order": "DESCENDING"
         }
       ]
     },
     {
-      "collectionGroup": "restaurants",
+      "collectionGroup": "events",
       "queryScope": "COLLECTION",
       "fields": [
         {
@@ -43,7 +43,7 @@
       ]
     },
     {
-      "collectionGroup": "restaurants",
+      "collectionGroup": "events",
       "queryScope": "COLLECTION",
       "fields": [
         {
@@ -57,7 +57,7 @@
       ]
     },
     {
-      "collectionGroup": "restaurants",
+      "collectionGroup": "events",
       "queryScope": "COLLECTION",
       "fields": [
         {
@@ -65,13 +65,13 @@
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "avgRating",
+          "fieldPath": "eventDateBegin",
           "order": "DESCENDING"
         }
       ]
     },
     {
-      "collectionGroup": "restaurants",
+      "collectionGroup": "events",
       "queryScope": "COLLECTION",
       "fields": [
         {
@@ -85,7 +85,7 @@
       ]
     },
     {
-      "collectionGroup": "restaurants",
+      "collectionGroup": "events",
       "queryScope": "COLLECTION",
       "fields": [
         {
@@ -99,7 +99,7 @@
       ]
     },
     {
-      "collectionGroup": "restaurants",
+      "collectionGroup": "events",
       "queryScope": "COLLECTION",
       "fields": [
         {
